@@ -169,10 +169,10 @@ for i=1:f.ns
         f.lbs(m,n,i)    =   f.lmns(j,i);
     end
 end
-f.rumns=-f.rmnc.*repmat(f.xm',[1 f.ns]);
-f.rvmns=-f.rmnc.*repmat(f.xn',[1 f.ns]);
-f.zumnc=f.zmns.*repmat(f.xm',[1 f.ns]);
-f.zvmnc=f.zmns.*repmat(f.xn',[1 f.ns]);
+f.rumns=-f.rmnc.*repmat(f.xm,[1 f.ns]);
+f.rvmns=-f.rmnc.*repmat(f.xn,[1 f.ns]);
+f.zumnc=f.zmns.*repmat(f.xm,[1 f.ns]);
+f.zvmnc=f.zmns.*repmat(f.xn,[1 f.ns]);
 % Handle Radial Derivatives
 f.rsc=f.rbc;
 f.zss=f.zbs;
@@ -264,10 +264,10 @@ if f.iasym==1
             f.lbc(m,n,i)    =   f.lmnc(j,i);
         end
     end
-    f.rumnc=-f.rmns.*repmat(f.xm',[1 f.ns]);
-    f.rvmnc=-f.rmns.*repmat(f.xn',[1 f.ns]);
-    f.zumns=f.zmnc.*repmat(f.xm',[1 f.ns]);
-    f.zvmns=f.zmnc.*repmat(f.xn',[1 f.ns]);
+    f.rumnc=-f.rmns.*repmat(f.xm,[1 f.ns]);
+    f.rvmnc=-f.rmns.*repmat(f.xn,[1 f.ns]);
+    f.zumns=f.zmnc.*repmat(f.xm,[1 f.ns]);
+    f.zvmns=f.zmnc.*repmat(f.xn,[1 f.ns]);
     % Handle Radial Derivatives
     f.rss=f.rbs;
     f.zsc=f.zbc;
@@ -2287,7 +2287,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function f=read_vmec_netcdf(filename)
 mu0=4.*pi.*1e-7;
-f=read_netcdf(filename,'strip','flipdim');
+f=read_netcdf(filename,'strip');
 % Now fix named fields so they match the old way of doing things
 f.ierr_vmec=f.ierflag;
 if (f.ierr_vmec ~= 0), return; end
@@ -2355,6 +2355,7 @@ for mn = 1:f.mnmax_nyq
         bv1 = f.bsubvmnc(mn,js1)./shalf(js1);
         t3  = ohs.*(bv1-bv0).*sfull(js)+0.25.*(bv0+bv1)./sfull(js);
     else
+        disp(size(f.bsubsmns))
         t1  = 0.5.*(f.bsubsmns(mn,js1)+f.bsubsmns(mn,js));
         t2  = ohs.*(f.bsubumnc(mn,js1)-f.bsubumnc(mn,js));
         t3  = ohs.*(f.bsubvmnc(mn,js1)-f.bsubvmnc(mn,js));

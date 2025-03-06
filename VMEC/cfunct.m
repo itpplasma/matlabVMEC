@@ -29,8 +29,8 @@ ns=size(rmnc,2);
 lt=length(theta);
 lz=length(zeta);
 % Create mode x angle arrays
-mt=xm'*theta;
-nz=xn'*zeta;
+mt=xm*theta;
+nz=xn*zeta;
 % Create Trig Arrays
 cosmt=cos(mt);
 sinmt=sin(mt);
